@@ -1,0 +1,17 @@
+DROP TABLE IF EXISTS book;
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE book (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    publish_date DATE,
+    description TEXT
+);
+
+CREATE TABLE users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL
+);
