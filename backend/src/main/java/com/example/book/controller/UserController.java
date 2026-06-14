@@ -1,5 +1,6 @@
 package com.example.book.controller;
 
+import com.example.book.common.ErrorCode;
 import com.example.book.common.Result;
 import com.example.book.entity.User;
 import com.example.book.service.UserService;
@@ -21,6 +22,6 @@ public class UserController {
             user.setPassword(null); // Don't return password
             return Result.success(user);
         }
-        return Result.error("用户名或密码错误");
+        return Result.error(ErrorCode.PARAM_VALIDATION_FAILED, "用户名或密码错误");
     }
 }

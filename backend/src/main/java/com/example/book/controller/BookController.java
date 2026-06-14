@@ -1,11 +1,14 @@
 package com.example.book.controller;
 
 import com.example.book.common.Result;
+import com.example.book.dto.BookCreateRequest;
+import com.example.book.dto.BookUpdateRequest;
 import com.example.book.entity.Book;
 import com.example.book.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -26,14 +29,14 @@ public class BookController {
     }
 
     @PostMapping
-    public Result<Void> save(@RequestBody Book book) {
-        bookService.save(book);
+    public Result<Void> create(@Valid @RequestBody BookCreateRequest request) {
+        bookService.create(request);
         return Result.success(null);
     }
 
     @PutMapping
-    public Result<Void> update(@RequestBody Book book) {
-        bookService.save(book);
+    public Result<Void> update(@Valid @RequestBody BookUpdateRequest request) {
+        bookService.update(request);
         return Result.success(null);
     }
 

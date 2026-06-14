@@ -16,9 +16,16 @@ public class Result<T> {
         return result;
     }
 
-    public static <T> Result<T> error(String message) {
+    public static <T> Result<T> error(ErrorCode errorCode) {
         Result<T> result = new Result<>();
-        result.setCode(500);
+        result.setCode(errorCode.getCode());
+        result.setMessage(errorCode.getMessage());
+        return result;
+    }
+
+    public static <T> Result<T> error(ErrorCode errorCode, String message) {
+        Result<T> result = new Result<>();
+        result.setCode(errorCode.getCode());
         result.setMessage(message);
         return result;
     }
