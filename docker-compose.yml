@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db:
     image: mysql:8.0
@@ -42,7 +40,7 @@ services:
       dockerfile: Dockerfile
     container_name: longmao-frontend
     ports:
-      - "3526:80"
+      - "3526:8080"
     depends_on:
       - backend
 
