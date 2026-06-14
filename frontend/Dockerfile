@@ -15,9 +15,12 @@ RUN npm run build
 FROM nginx:alpine AS runtime
 RUN apk add --no-cache shadow && \
     groupadd -r app && useradd -r -g app app && \
-    mkdir -p /var/cache/nginx /var/run /var/log/nginx && \
-    chown -R app:app /var/cache/nginx /var/run /var/log/nginx /usr/share/nginx/html /etc/nginx/conf.d && \
-    chmod -R 755 /var/cache/nginx /var/run /var/log/nginx && \
+    mkdir -p /var/cache/nginx /var/log/nginx && \
+    # 以非 root 运行：将 pid 写到可写目录，并去掉只有 root 才生效的 user 指令
+    sed -i 's@pid .*nginx.pid;@pid /tmp/nginx.pid;@' /etc/nginx/nginx.conf && \
+    sed -i '/^user .*;/d' /etc/nginx/nginx.conf && \
+    chown -R app:app /var/cache/nginx /var/log/nginx /usr/share/nginx/html /etc/nginx/conf.d /etc/nginx/nginx.conf && \
+    chmod -R 755 /var/cache/nginx /var/log/nginx && \
     apk del shadow
 COPY --from=builder /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
